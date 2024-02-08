@@ -54,7 +54,7 @@
       
       <img v-if="!belt" class="absolute bottom-[14%] right-[-36%] w-[2.5vh] belt" src="https://cdn.discordapp.com/attachments/826477720707792929/1030071188015304754/Sin_titulo-1.png">
       
-      <i v-if="cruise" class="fas fa-tachometer-alt-fast top-[-10%] left-[50%] -translate-x-[50%]"></i>
+      <i v-if="cruise" class="fas fa-tachometer-alt-fast absolute top-[-5%] left-[50%] -translate-x-[50%]"></i>
     </div>
     <audio id="cinturon" autoplay></audio>
 </template>
