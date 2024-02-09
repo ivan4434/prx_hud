@@ -1,5 +1,5 @@
 # PRX HUD
-
+My Discord Server: https://discord.gg/FeWxXneHrd
 - Only ESX (By the moment)
 - Street Display at vehicle
 - Status Bars:
