@@ -43,6 +43,13 @@
     </Transition>
 
     <Transition name="fade">
+    <div v-if="bars.oxygen <= 90" class="duration-200 relative overflow-hidden  border-[.2vh] rounded border-[rgba(0,0,0,.7)] bg-[rgba(71,71,71,.5)] w-[3.5vh] h-[3.5vh] m-[.5vh] rotate-[180deg]">
+      <div class="duration-200 bg-[rgba(0,0,0,.7)] w-[101%]" :class="'h-['+(bars.oxygen+1)+'%]'"></div>
+      <i class="absolute fas fa-lungs text-[1.7vh] left-[50%] top-[50%] text-[white] translate-x-[-50%] translate-y-[-50%] rotate-[180deg]"></i>
+    </div>
+    </Transition>
+
+    <Transition name="fade">
     <div class="duration-200 relative overflow-hidden  border-[.2vh] rounded border-[rgba(0,0,0,.7)] bg-[rgba(71,71,71,.5)] w-[3.5vh] h-[3.5vh] m-[.5vh] rotate-[180deg]" :class="{'border-green-500':hud.isTalking}">
       <div class="duration-200 bg-[rgba(0,0,0,.7)] w-[101%]" :class="'h-['+(bars.voice+1)+'%]'"></div>
       <i class="absolute fas fa-microphone-alt text-[1.5vh] left-[50%] top-[50%] text-[white] translate-x-[-50%] translate-y-[-50%] rotate-[180deg]"></i>

@@ -11,6 +11,7 @@ local hudInfo = {
     thrist = 0,
     stress = 0,
     stamina = 0,
+    oxygen = 100,
     voice = 0,
     radio = 0
   }
@@ -83,6 +84,8 @@ CreateThread(function()
     hudInfo.bars.health = (GetEntityHealth(plyPed) - 100)
 
     hudInfo.bars.stamina = 100 - GetPlayerSprintStaminaRemaining(PlayerId())
+
+    hudInfo.bars.oxygen = math.ceil(GetPlayerUnderwaterTimeRemaining(PlayerId())) * 10
 
     hudInfo.isCar = IsPedInAnyVehicle(plyPed, false)
 
