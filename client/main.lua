@@ -130,6 +130,7 @@ CreateThread(function()
       end
 
       SendNUIMessage({carInfo = carInfo})
+      actualCar = GetVehiclePedIsIn(plyPed, false)
     end
 
     if not hudInfo.isCar then
