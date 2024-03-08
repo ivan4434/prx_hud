@@ -102,13 +102,16 @@ end)
 -- CAR HUD --
 
 CreateThread(function()
+  local ms
   while true do 
-    Wait(2000)
-    if hudInfo.isCar and actualCar ~= 0 then
+    ms = 2000
+
+    if carInfo.belt and actualCar == 0 then
       carInfo.belt = false
     end
-    while hudInfo.isCar and actualCar ~= 0 do
-      Wait(100)
+
+    if hudInfo.isCar and actualCar ~= 0 then
+      ms = 100
       DisplayRadar(true)
       carInfo.emer = IsVehicleSirenOn(actualCar)
 
@@ -130,19 +133,19 @@ CreateThread(function()
       end
 
       SendNUIMessage({carInfo = carInfo})
-      actualCar = GetVehiclePedIsIn(plyPed, false)
     end
 
     if not hudInfo.isCar then
       DisplayRadar(false)
     end
+
+    Wait(ms)
   end
 end)
 
 CreateThread(function()
   while true do 
-    Wait(3000)
-    while hudInfo.isCar and actualCar ~= 0 do
+    if hudInfo.isCar and actualCar ~= 0 then
       Wait(5000)
       if not carInfo.belt and not carInfo.moto then
         PlaySound("alerta", 0.5)
@@ -154,6 +157,7 @@ CreateThread(function()
       _street = GetStreetNameFromHashKey(streetname);
       carInfo.street = zoneLabel .. " / ".. _street.."  "
     end
+    Wait(3000)
   end
 end)
 
@@ -181,23 +185,25 @@ end)
 
 -- LOGICA DEL CINTURON --
 CreateThread(function()
+  local ms
   while true do
-    Wait(2500)
-    while carInfo.belt do
-      Wait(1)
+    ms = 2500
+    if carInfo.belt then
+      ms = 1
       DisableControlAction(0, 75, true)
 			DisableControlAction(27, 75, true)
     end
+    Wait(ms)
   end
 end)
 
 CreateThread(function()
   while true do 
-    Wait(3000)
-    while not carInfo.belt and hudInfo.isCar and not carInfo.moto do
+    ms = 2000
+    if not carInfo.belt and hudInfo.isCar and not carInfo.moto then
+      ms = 1000
       local velBuffer = GetEntityVelocity(actualCar)
       local prevSpeed = GetEntitySpeed(actualCar)*3.6
-      Wait(1000)
       local currentSpeed = GetEntitySpeed(actualCar)*3.6
 
       if (prevSpeed - currentSpeed) >= 120 then
@@ -205,11 +211,11 @@ CreateThread(function()
         local fw = Fwv(PlayerPedId())
         SetEntityCoords(PlayerPedId(), co.x + fw.x, co.y + fw.y, co.z - 0.47, true, true, true)
         SetEntityVelocity(PlayerPedId(), velBuffer.x, velBuffer.y, velBuffer.z)
-        Wait(1)
         SetPedToRagdoll(PlayerPedId(), 1000, 1000, 0, 0, 0, 0)
       end
 
     end
+    Wait(ms)
   end
 end)
 
@@ -252,16 +258,18 @@ end
 local EstadoAncla = false
 
 CreateThread(function()
+  local ms
   while true do
-    Wait(2000)
+    ms = 2000
     local playerPed = PlayerPedId()
-    while EstadoAncla and IsPedInAnyBoat(playerPed) do
-      Wait(0)
+    if EstadoAncla and IsPedInAnyBoat(playerPed) then
+      ms = 1
       SetVehicleEngineOn(GetVehiclePedIsIn(playerPed, false), false, false, true)
       FreezeEntityPosition(GetVehiclePedIsIn(playerPed, false), true)		
     end
     if IsPedInAnyBoat(playerPed) and not EstadoAncla then SetVehicleEngineOn(GetVehiclePedIsIn(playerPed, false), true, false, true) FreezeEntityPosition(GetVehiclePedIsIn(playerPed, false), false) end
     if not IsPedInAnyBoat(playerPed) then EstadoAncla = false end
+    Wait(ms)
   end
 end)
 
